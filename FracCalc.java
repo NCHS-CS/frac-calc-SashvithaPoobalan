@@ -1,10 +1,11 @@
-// Student Name
-// Period X
+// Sashvitha Poobalan
+// Period 6
 // Fraction Calculator Project
 
 import java.util.*;
 
-// TODO: Description of what this program does goes here.
+//Description: This program takes the String input from the user and prints it out in the console. If the user types in random letters other than test 1 it will print the user's input again.
+// If the user types in "quit" the program loop will end and the console will print "Goodbye!"
 public class FracCalc {
 
    // It is best if we have only one console object for input
@@ -45,7 +46,9 @@ public class FracCalc {
    // Return the full line that the user typed in.
    public static String getInput() {
       // TODO: Implement this method
-       return "quit";
+      System.out.println("Enter: ");
+      String input = console.nextLine();
+       return input;
 
    }
    
@@ -82,7 +85,7 @@ public class FracCalc {
    public static String processExpression(String input) {
       // TODO: implement this method!
     
-        return "reduced result of expression";
+        return input;
 
    }
    
