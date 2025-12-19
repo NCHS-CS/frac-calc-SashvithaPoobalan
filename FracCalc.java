@@ -152,7 +152,7 @@ public class FracCalc {
    //the parameter whole gets the whole number part fo the fraction
    //numer gets the numerator
    //denom gets the denominator
-   //return returns the imorob=per ge=raction numerator
+   //return returns the improper fraction
 
    //Converts the mixed number to an improper fraction numerator
    public static int calculateImpNumer (int whole, int numer, int denom){
