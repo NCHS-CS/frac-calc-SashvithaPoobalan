@@ -28,7 +28,8 @@ public class FracCalc {
          // special case the "quit" command
          if (input.equalsIgnoreCase("quit")) {
             done = true;
-         } else if (!UnitTestRunner.processCommand(input, FracCalc::processCommand)) {
+         } 
+         else if (!UnitTestRunner.processCommand(input, FracCalc::processCommand)) {
         	   // We allowed the UnitTestRunner to handle the command first.
             // If the UnitTestRunner didn't handled the command, process normally.
             String result = processCommand(input);
@@ -45,12 +46,10 @@ public class FracCalc {
    // Prompt the user with a simple, "Enter: " and get the line of input.
    // Return the full line that the user typed in.
    public static String getInput() {
-      // TODO: Implement this method
-      //Asks the user for a line/String and returns the input value
+      //Asks the user for a String and returns the input value
       System.out.println("Enter: ");
       String input = console.nextLine();
       return input;
-
    }
    
    // processCommand will process every user command except for "quit".
@@ -67,23 +66,7 @@ public class FracCalc {
       // Of course, this is only if the user is being nice.
       return processExpression(input);
    }
-   
-   // Lots work for this project is handled in here.
-   // Of course, this method will call LOTS of helper methods
-   // so that this method can be shorter.
-   // This will calculate the expression and RETURN the answer.
-   // This will NOT print anything!
-   // Input: an expression to be evaluated
-   //    Examples: 
-   //        1/2 + 1/2
-   //        2_1/4 - 0_1/8
-   //        1_1/8 * 2
-   // Return: the fully reduced mathematical result of the expression
-   //    Value is returned as a String. Results using above examples:
-   //        1
-   //        2 1/8
-   //        2 1/4
-   //This part helps evaluate the arithmetic expressions entered byt he user and returns them as a mixed number reduced
+
    public static String processExpression(String input) {
       
       //these parts use the help method getOperator and getSecondNum to find the operator and the second number
@@ -94,30 +77,30 @@ public class FracCalc {
       int index1 = input.indexOf(" " + operator + " ");
       String num1 = input.substring (0, index1);
   
-      //all of this converts the first number into an improper fraction
-     //We are converting the mixed numbers into an improper fraction because it is easier to caluclate that way
+      //All of this converts the first number into an improper fraction
+      //We are converting the mixed numbers into an improper fraction because it is easier to caluclate that way
       int whole1 = getWholeNum(num1);
       int numer1= getNumerator(num1);
       int denom1 = getDenominator(num1);
       int imp1 = calculateImpNumer(whole1, numer1, denom1);
-
-
 
       //Converts the second number into an improper fraction
       int whole = getWholeNum(num2);
       int numer = getNumerator(num2);
       int denom = getDenominator(num2);
       int imp2 = calculateImpNumer(whole, numer, denom);
-
-      //if (false){
-      //return "Op:" + operator + " Whole:" + whole + " Num:" + numer + " Den:" + denom;
-      //}
-
+      
+      //Prevents the error from showing if user is trying to divide by 0. It instead gives a preset error message.
+      if (denom1 ==0 || denom==0 ){
+            return "Error: Division by zero \n       You can't divide a number by zero \n       Please try entering a different expression";
+         }
+ 
+      // The reult number of the numerator and denominator is automatically set to 0 and incremented later in the program
       int rNumer = 0;
       int rDenom = 0;
 
-      //This whole part does all the addition subtraction multiplication and division
-      //uses the improper fraction coverts it into common denominators and does math
+      //Uses the improper fraction coverts it into common denominators and does math
+      //Idententifies what operator is being used and evaluates the user's input accordingly 
       if (operator == '+'){
          rNumer = imp1 * denom + imp2 * denom1;
          rDenom = denom1 * denom;
@@ -128,15 +111,12 @@ public class FracCalc {
          rNumer = imp1 *imp2;
          rDenom = denom1 * denom;
       }else if (operator =='/'){
-         if (imp2==0){
-            return "Error: Division by zero";
-         }
          rNumer = imp1 * denom;
          rDenom = imp2 * denom1;
       }
 
-     
-      //finds the gcd of the improper fractions anf reduces the fraction
+      //finds the gcd of the improper fractions and reduces the fraction
+      //The math.abs takes in the absolute value of both numerator and denominator and finds the greatest common denominator
       int gcd = gcd(Math.abs(rNumer), Math.abs(rDenom));
       rNumer /= gcd;
       rDenom/= gcd;
@@ -168,12 +148,11 @@ public class FracCalc {
             return rWhole + " " + rFrac + "/" + rDenom;
          }
       }
-      
-   
-
-   
    }
-
+   //the parameter whole gets the whole number part fo the fraction
+   //numer gets the numerator
+   //denom gets the denominator
+   //return returns the imorob=per ge=raction numerator
 
    //Converts the mixed number to an improper fraction numerator
    public static int calculateImpNumer (int whole, int numer, int denom){
@@ -181,15 +160,11 @@ public class FracCalc {
       if (whole < 0){
       imp = -imp;
       }
-
-   
-
       return imp;
    }
 
-   
-
    //Returns the greatest common divisor
+   //Euclidean algorithm https://en.wikipedia.org/wiki/Euclidean_algorithm
    public static int gcd(int a, int b){
       a = Math.abs(a);
       b= Math.abs(b);
@@ -201,7 +176,8 @@ public class FracCalc {
       }
       return a;
    }
-   //This method checks which operator the input contains and retunrs that operator
+   //Checks which operator the input contains and returns that operator (for CP2)
+   //This operator is gonna be used to perform the math itself later
    public static char getOperator(String input){
       if (input.indexOf(" + ") !=-1){
          return '+';
@@ -219,9 +195,7 @@ public class FracCalc {
       int index = input.indexOf(" " + operator + " ");
       String num = input.substring(index + 3);
       return num;
-
    }
-
    //returns the whole number based off of the user input
    public static int getWholeNum(String getSecondNum){
 
@@ -236,7 +210,6 @@ public class FracCalc {
       }else{
          return Integer.parseInt(getSecondNum);
       }
-
    }
 
     //Returns the numerator part of the number from input
@@ -245,7 +218,7 @@ public class FracCalc {
       if (getSecondNum.contains("_")){
          //gets the index of where the space is
          int j = getSecondNum.indexOf("_");
-         //finds index of the slash or divide=ing sign
+         //finds index of the slash or dividing sign
          int k = getSecondNum.indexOf("/");
          //gets the number between the space and slash
          //the +1 is to make sure to get the number AFTER the space and not including the space
@@ -253,14 +226,16 @@ public class FracCalc {
          //this part converst the string into an int
          int numer = Integer.parseInt(l);
          return numer;
-      }else if (getSecondNum.contains("/")){
+      } else if (getSecondNum.contains("/"))
+         {
          //this part gets the number that comes before the slash mark
          int k = getSecondNum.indexOf("/");
          String l = getSecondNum.substring(0,k);
          //converts string to an int
          int numer = Integer.parseInt(l);
          return numer;
-      }else{
+      } else
+         {
          //if none of the oconditions apple, there is no numerator meanignt here is not fraction number entered
          return 0;
       }
@@ -276,25 +251,29 @@ public class FracCalc {
          int denom = Integer.parseInt(deno);
          return denom;
 
-      }else if (getSecondNum.contains("/")){
+      } else if (getSecondNum.contains("/")){
          int d = getSecondNum.indexOf("/");
          String deno = getSecondNum.substring(d + 1);
          int denom = Integer.parseInt(deno);
          return denom;
-      } else{
+      } else
+       {
          return 1;
-      }
+       }
 
     }
    // Returns a string that is helpful to the user about how
    // to use the program. These are instructions to the user.
    public static String provideHelp() {
-      // TODO: Update this help text!
      
       String help = " \n";
-      help += "Here is your help. Struggle. Try again.\n Keep trying but if that doesn't work try rereading the instructions. You might catch something you didn't earlier. \n If that still doesn't work, then just keep running your program until you catch the errors. Goodluck! You got this!";
+      help += "Welcome to my Fraction Calculator! \n I see that you are either running into an error or need help running the program. The rules to my program is simple and as followed below. \n 1) Make sure you are entering a space between the operators of your expression";
+      help += "Ex: \n       1_+_2 //See the _ (underscore) that's the space \n";
+      help += " 2) Check for any typos in your expressions \n";
+      help += " 3) Make sure not to enter any expressions that involes dividing by 0\n";
+      help += " Type quit to exit the program!\n";
+      help += " Enjoy!";
       
       return help;
    }
 }
-
