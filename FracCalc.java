@@ -268,7 +268,7 @@ public class FracCalc {
      
       String help = " \n";
       help += "Welcome to my Fraction Calculator! \n I see that you are either running into an error or need help running the program. The rules to my program is simple and as followed below. \n 1) Make sure you are entering a space between the operators of your expression";
-      help += "Ex: \n       1_+_2 //See the _ (underscore) that's the space \n";
+      help += "Ex: \n    1_+_2 //See the _ (underscore) that's the space \n";
       help += " 2) Check for any typos in your expressions \n";
       help += " 3) Make sure not to enter any expressions that involes dividing by 0\n";
       help += " Type quit to exit the program!\n";
